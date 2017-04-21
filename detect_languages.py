@@ -10,5 +10,8 @@ for root, dirs, files in os.walk("./results/"):
 
 		with open(os.path.join(root, file), 'r') as handle:
 			lyrics = handle.read()
-			lang = detect(lyrics)
+			try:
+				lang = detect(lyrics)
+			except:
+				lang = 'UNKNOWN'
 			print(os.path.join(root, file), '->', lang)
