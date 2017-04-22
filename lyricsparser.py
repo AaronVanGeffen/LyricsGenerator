@@ -5,14 +5,11 @@ import pandas as pd
 
 pd.set_option('display.width', 120)
 
-df = pd.read_csv("lyrics.csv")
+# Read CSV into data frame.
+df = pd.read_csv("lyrics_eng.csv", header = None, names = ['artist', 'year', 'title', 'genre', 'lyrics'])
 
-# Drop empty lyrics
-df = df[pd.notnull(df['lyrics'])]
+# Example: get row 5.
+row = df.ix[5]
 
-# TODO: check for empty lyrics
-
-# TODO: check for lyrics not containing \n
-
-# TODO: merge with other dataset
-
+# Example: print genre from row above.
+print(row['genre'])
