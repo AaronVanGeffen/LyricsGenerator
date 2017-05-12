@@ -1,4 +1,8 @@
+#!/usr/bin/env python3
+import argparse
 import numpy
+import os
+
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import Dropout
@@ -6,9 +10,17 @@ from keras.layers import LSTM
 from keras.callbacks import ModelCheckpoint
 from keras.utils import np_utils
 
+# Parse arguments from command line.
+parser = argparse.ArgumentParser(description='Train a neural network for lyric generation.')
+parser.add_argument('--lyrics', dest='filename', required=True,
+                    help='Dataset to use for training purposes')
+parser.add_argument('--outdir', dest='outdir', required=True,
+                    help='Folder to write weight files to')
+
+args = parser.parse_args()
+
 # load ascii text and covert to lowercase
-filename = "lyrics/1.txt"
-raw_text = open(filename).read()
+raw_text = open(args.filename).read()
 raw_text = raw_text.lower()
 
 # create mapping of unique chars to integers
@@ -46,8 +58,12 @@ model.add(Dropout(0.2))
 model.add(Dense(y.shape[1], activation='softmax'))
 model.compile(loss='categorical_crossentropy', optimizer='adam')
 
+# check whether output directory exists -- create it if it doesn't.
+if not os.path.isdir(args.outdir):
+	os.mkdir(args.outdir)
+
 # define the checkpoint
-filepath="weights-improvement-{epoch:02d}-{loss:.4f}.hdf5"
+filepath = os.path.join(args.outdir, "weights-improvement-{epoch:02d}-{loss:.4f}.hdf5")
 checkpoint = ModelCheckpoint(filepath, monitor='loss', verbose=1, save_best_only=True, mode='min')
 callbacks_list = [checkpoint]
 
