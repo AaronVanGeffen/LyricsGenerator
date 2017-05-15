@@ -1,6 +1,8 @@
-# Load LSTM network and generate text
-import sys
+#!/usr/bin/env python3
+import argparse
+import os
 import numpy
+import sys
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import Dropout
@@ -8,9 +10,17 @@ from keras.layers import LSTM
 from keras.callbacks import ModelCheckpoint
 from keras.utils import np_utils
 
+# Parse arguments from command line.
+parser = argparse.ArgumentParser(description='Train a neural network for lyric generation.')
+parser.add_argument('--lyrics', dest='filename', required=True,
+                    help='Dataset to use for training purposes')
+parser.add_argument('--check', dest='checkpoint', required=True,
+                    help='Checkpoint file to load weights from')
+
+args = parser.parse_args()
+
 # load ascii text and covert to lowercase
-filename = "shakespeare/loverscomplaint.txt"
-raw_text = open(filename).read()
+raw_text = open(args.filename).read()
 raw_text = raw_text.lower()
 
 # create mapping of unique chars to integers, and a reverse mapping
@@ -52,27 +62,52 @@ model.add(Dropout(0.2))
 model.add(Dense(y.shape[1], activation='softmax'))
 
 # load the network weights
-filename = "weights-improvement-19-2.7227.hdf5"
-model.load_weights(filename)
+model.load_weights(args.checkpoint)
 model.compile(loss='categorical_crossentropy', optimizer='adam')
 
-# pick a random seed
+def intListToString(pattern):
+	return ''.join([int_to_char[value] for value in pattern])
+
+def generateChars(pattern, N_chars=1000):
+	out = pattern.copy()
+	for i in range(N_chars):
+		x = numpy.reshape(pattern, (1, len(pattern), 1))
+		x = x / float(n_vocab)
+
+		prediction = model.predict(x, verbose=0)
+		index = numpy.argmax(prediction)
+		# result = int_to_char[index]
+		out.append(index)
+
+		#seq_in = [int_to_char[value] for value in pattern]
+		# sys.stdout.write(result)
+		pattern.append(index)
+		pattern = pattern[1:len(pattern)]
+
+	print("===========")
+	print(intListToString(out))
+	print("===========")
+
+
+# First, pick a random seed
 start = numpy.random.randint(0, len(dataX)-1)
 pattern = dataX[start]
-print("Seed:")
-print("\"", ''.join([int_to_char[value] for value in pattern]), "\"")
+print("Random seed:")
+print("===========")
+print(intListToString(pattern))
+print("===========")
 
-list = []
+# Then, generate a random lyric...
+generateChars(pattern)
 
-# generate characters
-for i in range(1000):
-	x = numpy.reshape(pattern, (1, len(pattern), 1))
-	x = x / float(n_vocab)
-	prediction = model.predict(x, verbose=0)
-	index = numpy.argmax(prediction)
-	result = int_to_char[index]
-	seq_in = [int_to_char[value] for value in pattern]
-	sys.stdout.write(result)
-	pattern.append(index)
-	pattern = pattern[1:len(pattern)]
-print("\nDone.")
+# Finally, do the same for patterns from the user...
+while len(pattern):
+	print("Generate another lyric? Enter 100 chars, or leave blank to quit.")
+	pattern = input("New pattern: ")
+
+	# preprocess seed
+	pattern = pattern.lower()
+	pattern = [char_to_int[char] for char in pattern]
+
+	if len(pattern):
+		generateChars(pattern)
