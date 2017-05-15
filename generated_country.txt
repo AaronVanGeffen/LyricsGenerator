@@ -1,0 +1,41 @@
+(tensorflow) johannadevos@DESKTOP-K85V72F:/mnt/c/Users/johan/Documents/GitHub/LyricsGenerator$ python3 keras_generate.py --lyrics lyrics/Country.txt --check weights/country/weights-improvement-33-1.8550.hdf5
+Using TensorFlow backend.
+Total Characters:  944999
+Total Vocab:  61
+Total Patterns:  944899
+2017-05-15 15:24:55.787389: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE4.1 instructions, but these are available on your machine and could speed up CPU computations.
+2017-05-15 15:24:55.790787: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE4.2 instructions, but these are available on your machine and could speed up CPU computations.
+2017-05-15 15:24:55.792000: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use AVX instructions, but these are available on your machine and could speed up CPU computations.
+2017-05-15 15:24:55.792881: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use AVX2 instructions, but these are available on your machine and could speed up CPU computations.
+2017-05-15 15:24:55.793512: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use FMA instructions, but these are available on your machine and could speed up CPU computations.
+Random seed:
+===========
+py independence day, oh, and by the way i'm leavin'"
+i didn't know you could be so cut and dry
+
+so s
+===========
+===========
+py independence day, oh, and by the way i'm leavin'"
+i didn't know you could be so cut and dry
+
+so she said "io a soie to the sayent and the saie
+io the saie that i could doenn
+the way that i could de danlen the saie
+when i was the way that i was to be the say
+
+i was toiether i was to love the way that i was to be the say
+i was toiether i could see the way that i was to be the say
+i was toiether i could see the way that i was to be the say
+i was toiether i could see the way that i was to be the say
+i was toiether i could see the way that i was to be the say
+i was toiether i could see the way that i was to be the say
+i was toiether i could see the way that i was to be the say
+i was toiether i could see the way that i was to be the say
+i was toiether i could see the way that i was to be the say
+i was toiether i could see the way that i was to be the say
+i was toiether i could see the way that i was to be the say
+i was toiether i could see the way that i was to be the say
+i was toiether i could see the way that i was to be the say
+i was toiether i could see the way that i was to be the
+===========
