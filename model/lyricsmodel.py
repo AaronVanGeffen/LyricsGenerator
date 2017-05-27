@@ -1,5 +1,6 @@
 import numpy
 import os
+import sys
 
 from keras.callbacks import ModelCheckpoint
 from keras.layers import Dense
@@ -100,6 +101,7 @@ class LyricsModel:
 			out.append(index)
 			pattern.append(index)
 			pattern = pattern[1:len(pattern)]
+			sys.stdout.write(self.int_to_char[index])
 
 		print("===========")
 		print(self.intListToString(out))
@@ -115,4 +117,4 @@ class LyricsModel:
 		print("===========")
 
 		# Then, generate a random lyric...
-		generateChars(pattern)
+		self.generateChars(pattern)
