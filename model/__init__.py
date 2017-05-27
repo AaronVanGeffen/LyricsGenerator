@@ -1,0 +1,1 @@
+from .lyricsmodel import LyricsModel
