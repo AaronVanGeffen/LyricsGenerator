@@ -54,16 +54,16 @@ class LyricsModel:
 			self.loadWeights()
 		self.compile()
 
-	def loadModel(self, sequences=512, layers=3, dropoutRate=0.2, cellType=LSTM):
+	def loadModel(self, cellType=LSTM):
 		# define the LSTM model
 		self.model = Sequential()
-		self.model.add(cellType(sequences, input_shape=(self.X.shape[1], self.X.shape[2]), return_sequences=(layers > 1)))
-		self.model.add(Dropout(dropoutRate))
+		self.model.add(cellType(int(self.options.sequences), input_shape=(self.X.shape[1], self.X.shape[2]), return_sequences=(int(self.options.layers) > 1)))
+		self.model.add(Dropout(float(self.options.dropoutRate)))
 
-		for i in range(2, layers + 1):
-			isLastCell = i == layers
-			self.model.add(cellType(sequences, return_sequences=(not isLastCell)))
-			self.model.add(Dropout(dropoutRate))
+		for i in range(2, int(self.options.layers) + 1):
+			isLastCell = i == int(self.options.layers)
+			self.model.add(cellType(int(self.options.sequences), return_sequences=(not isLastCell)))
+			self.model.add(Dropout(float(self.options.dropoutRate)))
 
 		self.model.add(Dense(self.y.shape[1], activation='softmax'))
 
