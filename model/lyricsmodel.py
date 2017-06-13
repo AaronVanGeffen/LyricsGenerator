@@ -37,6 +37,8 @@ class LyricsModel:
 			seq_out = raw_text[i + seq_length]
 			self.dataX.append([self.char_to_int[char] for char in seq_in])
 			dataY.append(self.char_to_int[seq_out])
+			if i%100000==0:
+				print("Now at:", i, "patterns")			
 
 		self.n_patterns = len(self.dataX)
 		print("Total Patterns: ", self.n_patterns)
@@ -89,9 +91,9 @@ class LyricsModel:
 	def intListToString(self, pattern):
 		return ''.join([self.int_to_char[value] for value in pattern])
 
-	def generateChars(self, pattern, N_chars=1000):
+	def generateChars(self, pattern, n_char_gen=200):
 		out = pattern.copy()
-		for i in range(self.n_chars):
+		for i in range(n_char_gen):
 			x = numpy.reshape(pattern, (1, len(pattern), 1))
 			x = x / float(self.n_vocab)
 
@@ -103,7 +105,7 @@ class LyricsModel:
 			pattern = pattern[1:len(pattern)]
 			sys.stdout.write(self.int_to_char[index])
 
-		print("===========")
+		print("\n===========")
 		print(self.intListToString(out))
 		print("===========")
 
